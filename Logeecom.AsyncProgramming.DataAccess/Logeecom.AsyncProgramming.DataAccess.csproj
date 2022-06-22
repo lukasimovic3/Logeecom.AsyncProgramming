@@ -7,16 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Logeecom.AsyncProgramming.Domain\Logeecom.AsyncProgramming.Domain.csproj" />
+    <ProjectReference Include="..\Logeecom.AsyncProgramming.Business\Logeecom.AsyncProgramming.Business.csproj" />
   </ItemGroup>
 
 </Project>

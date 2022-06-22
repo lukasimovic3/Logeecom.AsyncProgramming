@@ -31,14 +31,14 @@ namespace Logeecom.AsyncProgramming.FluentMigrator.Migrations
                .WithColumn("Country").AsString().NotNullable()
                .WithColumn("Year").AsInt32().NotNullable()
                .WithColumn("GenreId").AsGuid().NotNullable().ForeignKey("Genres", "Id")
-               .WithColumn("DirectorId").AsGuid().NotNullable().ForeignKey("Awards", "Id")
-               .WithColumn("AwardId").AsGuid().Nullable().ForeignKey("Directors", "Id");
+               .WithColumn("DirectorId").AsGuid().NotNullable().ForeignKey("Directors", "Id")
+               .WithColumn("AwardId").AsGuid().Nullable().ForeignKey("Awards", "Id");
 
             Create.Table("Acts")
-                .WithColumn("ActorId").AsGuid().NotNullable().ForeignKey("Actors", "Id")
-                .WithColumn("FilmId").AsGuid().NotNullable().ForeignKey("Films", "Id");
+                .WithColumn("ActorsId").AsGuid().NotNullable().ForeignKey("Actors", "Id")
+                .WithColumn("FilmsId").AsGuid().NotNullable().ForeignKey("Films", "Id");
 
-            Create.PrimaryKey().OnTable("Acts").Columns("ActorId", "FilmId");
+            Create.PrimaryKey().OnTable("Acts").Columns("ActorsId", "FilmsId");
         }
     }
 }

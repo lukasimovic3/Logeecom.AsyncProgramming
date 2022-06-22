@@ -2,6 +2,10 @@
 {
     public class Film
     {
+        public Film()
+        {
+        }
+
         public Film(Guid id, string name, int year, string country, Guid genreId, Guid directorId, Guid awardId)
         {
             Id = id;
@@ -11,6 +15,7 @@
             GenreId = genreId;
             DirectorId = directorId;
             AwardId = awardId;
+            Actors = new();
         }
 
         public Guid Id { get; private set; }

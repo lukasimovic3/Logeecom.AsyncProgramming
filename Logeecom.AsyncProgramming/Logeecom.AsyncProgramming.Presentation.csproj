@@ -7,7 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Npgsql" Version="6.0.5" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Logeecom.AsyncProgramming.Business\Logeecom.AsyncProgramming.Business.csproj" />
+    <ProjectReference Include="..\Logeecom.AsyncProgramming.DataAccess\Logeecom.AsyncProgramming.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
