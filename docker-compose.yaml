@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  moviesdb:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=movies
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - database_async:/var/lib/postgresql/data
+volumes:
+  database_async:
