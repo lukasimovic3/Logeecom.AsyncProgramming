@@ -14,13 +14,13 @@ namespace Logeecom.AsyncProgramming.DataAccess.Repositories
 
         public Director? GetDirectorByName(string name)
         {
-            Thread.Sleep(10);
+            Thread.Sleep(100);
             return this.context.Directors.FirstOrDefault(d => d.Name == name);
         }
 
         public void AddDirector(Director director)
         {
-            Thread.Sleep(10);
+            Thread.Sleep(100);
             this.context.Directors.Add(director);
         }
     }

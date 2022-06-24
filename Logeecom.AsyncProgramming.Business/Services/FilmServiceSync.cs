@@ -7,8 +7,6 @@ namespace Logeecom.AsyncProgramming.Business.Services
 {
     public class FilmServiceSync
     {
-        private static Mutex mutex = new Mutex();
-
         private readonly IFilmRepositorySync filmRepository;
         private readonly IActorRepositorySync actorRepository;
         private readonly IAwardRepositorySync awardRepository;
@@ -38,6 +36,8 @@ namespace Logeecom.AsyncProgramming.Business.Services
         {
             try
             {
+                Mutex mutex = new();
+
                 foreach (FilmViewModel film in films)
                 {
                     if (this.filmRepository.GetFilmByName(film.Name) != null)
@@ -46,21 +46,25 @@ namespace Logeecom.AsyncProgramming.Business.Services
                     }
 
                     Genre? genre = null;
-                    //this.CheckGenre(film, genre);
-                    Thread genreThread = new Thread(() => this.CheckGenre(film, out genre, FilmServiceSync.mutex));
+                    Thread genreThread = new(() => this.CheckGenre(film, out genre, mutex));
                     genreThread.Start();
 
-                    FilmServiceSync.mutex.WaitOne();
+                    Award? award = null;
+                    Thread awardThread = new(() => this.CheckAward(film, out award, mutex));
+                    awardThread.Start();
 
-                    Award? award = this.CheckAward(film);
+                    Director? director = null;
+                    Thread directorThread = new(() => this.CheckDirector(film, out director, mutex));
+                    directorThread.Start();
 
-                    Director? director = CheckDirector(film);
-
-                    List<Actor> actors = CheckActors(film);
-
-                    FilmServiceSync.mutex.ReleaseMutex();
+                    List<Actor>? actors = null;
+                    Thread actorsThread = new(() => this.CheckActors(film, out actors, mutex));
+                    actorsThread.Start();
 
                     genreThread.Join();
+                    awardThread.Join();
+                    directorThread.Join();
+                    actorsThread.Join();
 
                     Film newFilm = new(Guid.NewGuid(), film.Name, film.Year, film.Country, genre.Id, director.Id, award.Id);
                     newFilm.SetActors(actors);
@@ -75,10 +79,11 @@ namespace Logeecom.AsyncProgramming.Business.Services
             }
         }
 
-        private List<Actor> CheckActors(FilmViewModel film)
+        private void CheckActors(FilmViewModel film, out List<Actor> actors, Mutex mutex)
         {
-            List<Actor> actors = new();
+            mutex.WaitOne();
 
+            actors = new();
             foreach (ActorViewModel actorItem in film.Actors)
             {
                 Actor? actor = this.actorRepository.GetActorByName(actorItem.Name);
@@ -94,12 +99,14 @@ namespace Logeecom.AsyncProgramming.Business.Services
                 actors.Add(actor);
             }
 
-            return actors;
+            mutex.ReleaseMutex();
         }
 
-        private Director CheckDirector(FilmViewModel film)
+        private void CheckDirector(FilmViewModel film, out Director? director, Mutex mutex)
         {
-            Director? director = this.directorRepository.GetDirectorByName(film.Director);
+            mutex.WaitOne();
+
+            director = this.directorRepository.GetDirectorByName(film.Director);
             if (director is null)
             {
                 director = new Director(Guid.NewGuid(), film.Director);
@@ -110,19 +117,21 @@ namespace Logeecom.AsyncProgramming.Business.Services
                 director.IncerementFilms();
             }
 
-            return director;
+            mutex.ReleaseMutex();
         }
 
-        private Award CheckAward(FilmViewModel film)
+        private void CheckAward(FilmViewModel film, out Award? award, Mutex mutex)
         {
-            Award? award = this.awardRepository.GetAwardByName(film.Award);
+            mutex.WaitOne();
+
+            award = this.awardRepository.GetAwardByName(film.Award);
             if (award is null)
             {
                 award = new Award(Guid.NewGuid(), film.Award);
                 this.awardRepository.AddAward(award);
             }
 
-            return award;
+            mutex.ReleaseMutex();
         }
 
         private void CheckGenre(FilmViewModel film, out Genre? genre, Mutex mutex)

@@ -14,7 +14,7 @@ namespace Logeecom.AsyncProgramming.DataAccess.Repositories
 
         public void AddFilm(Film film)
         {
-            Thread.Sleep(10);
+            Thread.Sleep(100);
             this.context.Films.Add(film);
             this.context.SaveChanges();
         }
@@ -31,7 +31,7 @@ namespace Logeecom.AsyncProgramming.DataAccess.Repositories
 
         public Film? GetFilmByName(string name)
         {
-            Thread.Sleep(10);
+            Thread.Sleep(100);
             return this.context.Films.FirstOrDefault(f => f.Name == name);
         }
 
