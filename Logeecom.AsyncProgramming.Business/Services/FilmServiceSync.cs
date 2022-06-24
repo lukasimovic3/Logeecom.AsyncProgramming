@@ -34,16 +34,14 @@ namespace Logeecom.AsyncProgramming.Business.Services
 
         public void CreateFilms(List<FilmViewModel> films)
         {
-            using var transaction = this.filmRepository.BeginTransaction();
-
             try
             {
                 foreach (FilmViewModel film in films)
                 {
-                    /*if (this.filmRepository.GetFilmByName(film.Name) != null)
+                    if (this.filmRepository.GetFilmByName(film.Name) != null)
                     {
                         continue;
-                    }*/
+                    }
 
                     Genre? genre = this.genreRepository.GetGenreByName(film.Genre);
                     if (genre is null)
@@ -70,7 +68,7 @@ namespace Logeecom.AsyncProgramming.Business.Services
                         director.IncerementFilms();
                     }
 
-                    Film newFilm = new Film(Guid.NewGuid(), film.Name, film.Year, film.Country, genre.Id, director.Id, award.Id);
+                    Film newFilm = new(Guid.NewGuid(), film.Name, film.Year, film.Country, genre.Id, director.Id, award.Id);
                     foreach (ActorViewModel actorItem in film.Actors)
                     {
                         Actor? actor = this.actorRepository.GetActorByName(actorItem.Name);
@@ -85,11 +83,9 @@ namespace Logeecom.AsyncProgramming.Business.Services
                         }
                         newFilm.Actors.Add(actor);
                     }
-
                     this.filmRepository.AddFilm(newFilm);
                 }
-
-                transaction.Commit();
+                this.filmRepository.SaveChanges();
             }
             catch (Exception e)
             {

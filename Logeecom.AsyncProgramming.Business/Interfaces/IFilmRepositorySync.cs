@@ -1,5 +1,4 @@
 ﻿using Logeecom.AsyncProgramming.Domain;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Logeecom.AsyncProgramming.Business.Interfaces
 {
@@ -7,10 +6,10 @@ namespace Logeecom.AsyncProgramming.Business.Interfaces
     {
         public void AddFilm(Film film);
 
-        public IDbContextTransaction BeginTransaction();
-
         void DeleteAll();
 
         public Film? GetFilmByName(string name);
+
+        void SaveChanges();
     }
 }

@@ -22,7 +22,6 @@ namespace Logeecom.AsyncProgramming.DataAccess.Repositories
         {
             Thread.Sleep(10);
             this.context.Genres.Add(genre);
-            this.context.SaveChanges();
         }
     }
 }
