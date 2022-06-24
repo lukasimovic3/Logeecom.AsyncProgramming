@@ -15,21 +15,25 @@ namespace Logeecom.AsyncProgramming.DataAccess.Repositories
 
         public Task CreateAsync(Actor actor)
         {
+            Thread.Sleep(1000);
             return this.context.Actors.AddAsync(actor).AsTask();
         }
 
         public Task<Actor?> GetByActorName(string name)
         {
+            Thread.Sleep(1000);
             return this.context.Actors.FirstOrDefaultAsync(x => x.Name == name);
         }
 
         public Task SaveChanges()
         {
+            Thread.Sleep(1000);
             return this.context.SaveChangesAsync();
         }
 
         public Task<IDbContextTransaction> GetTransaction()
         {
+            Thread.Sleep(1000);
             return this.context.Database.BeginTransactionAsync();
         }
 

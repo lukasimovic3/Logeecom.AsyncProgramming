@@ -33,20 +33,7 @@ namespace Logeecom.AsyncProgramming.DataAccess
             modelBuilder.Entity<Film>()
                 .HasMany(x => x.Actors)
                 .WithMany(x => x.Films)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Acts",
-                    x => x
-                        .HasOne<Actor>()
-                        .WithMany()
-                        .HasForeignKey("ActorId")
-                        .OnDelete(DeleteBehavior.Cascade),
-                    x => x
-                        .HasOne<Film>()
-                        .WithMany()
-                        .HasForeignKey("FilmId")
-                        .OnDelete(DeleteBehavior.Cascade)
-
-                );
+                .UsingEntity(x => x.ToTable("Acts"));
 
             modelBuilder.Entity<Film>().Navigation(x => x.Genre).AutoInclude();
             modelBuilder.Entity<Film>().Navigation(x => x.Actors).AutoInclude();

@@ -38,7 +38,7 @@ namespace Logeecom.AsyncProgramming.Business.Services
             {
                 foreach (FilmDto film in request)
                 {
-                    List<Task<Actor?>> actorsTasks = new();
+                    List<Actor> actors = new();
                     Award award = await this.awardRepository.GetByAwardNameAsync(film.Award);
                     Director director = await this.directorRepository.GetByDirectorNameAsync(film.Director);
                     Genre genre = await this.genreRepository.GetByGenreNameAsync(film.Genre);
@@ -55,6 +55,7 @@ namespace Logeecom.AsyncProgramming.Business.Services
                         {
                             actor.IncrementFilms();
                         }
+                        actors.Add(actor);
                     }
 
                     if (award is null)
@@ -79,8 +80,11 @@ namespace Logeecom.AsyncProgramming.Business.Services
                         await this.genreRepository.CreateAsync(genre);
                     }
 
+                    Film newFilm = new(Guid.NewGuid(), film.Name, film.Year, film.Country, genre.Id, director.Id, award.Id);
+                    newFilm.AddActors(actors);
+
                     await this.filmRepository
-                        .CreateAsync(new(Guid.NewGuid(), film.Name, film.Year, film.Country, genre.Id, director.Id, award.Id));
+                        .CreateAsync(newFilm);
                 }
                 await this.actorRepository.SaveChanges();
                 await transaction.CommitAsync();

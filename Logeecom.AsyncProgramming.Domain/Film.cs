@@ -46,5 +46,10 @@
         public Guid GenreId { get; private set; }
 
         public Genre Genre { get; private set; }
+
+        public void AddActors(List<Actor> actors)
+        {
+            this.Actors = actors;
+        }
     }
 }
