@@ -17,6 +17,12 @@ namespace Logeecom.AsyncProgramming.DataAccess.Repositories
             return this.context.Films.AddAsync(film).AsTask();
         }
 
+        public Task SaveChanges()
+        {
+            Thread.Sleep(10);
+            return this.context.SaveChangesAsync();
+        }
+
         public Task<Film?> GetByFilmNameAsync(string name)
         {
             return this.context.Films.FirstOrDefaultAsync(x => x.Name == name);

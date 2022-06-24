@@ -13,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DbContextEF>(
-    o => o.UseNpgsql(builder.Configuration.GetConnectionString("MoviesDb")), ServiceLifetime.Transient
+    o => o.UseNpgsql(builder.Configuration.GetConnectionString("MoviesDb"))
 );
 
 builder.Services.AddScoped<ActorRepository>();

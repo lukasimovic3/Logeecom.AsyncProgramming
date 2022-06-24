@@ -17,6 +17,12 @@ namespace Logeecom.AsyncProgramming.DataAccess.Repositories
             return this.context.Awards.AddAsync(award).AsTask();
         }
 
+        public Task SaveChanges()
+        {
+            Thread.Sleep(10);
+            return this.context.SaveChangesAsync();
+        }
+
         public Task<Award?> GetByAwardNameAsync(string name)
         {
             return this.context.Awards.FirstOrDefaultAsync(x => x.Name == name);
