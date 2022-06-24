@@ -14,13 +14,13 @@ namespace Logeecom.AsyncProgramming.DataAccess.Repositories
 
         public Genre? GetGenreByName(string name)
         {
-            Thread.Sleep(10);
+            Thread.Sleep(100);
             return this.context.Genres.FirstOrDefault(g => g.Name == name);
         }
 
         public void AddGenre(Genre genre)
         {
-            Thread.Sleep(10);
+            Thread.Sleep(100);
             this.context.Genres.Add(genre);
         }
     }

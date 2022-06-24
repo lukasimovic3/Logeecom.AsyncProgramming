@@ -14,13 +14,13 @@ namespace Logeecom.AsyncProgramming.DataAccess.Repositories
 
         public Award? GetAwardByName(string name)
         {
-            Thread.Sleep(10);
+            Thread.Sleep(100);
             return this.context.Awards.FirstOrDefault(a => a.Name == name);
         }
 
         public void AddAward(Award award)
         {
-            Thread.Sleep(10);
+            Thread.Sleep(100);
             this.context.Awards.Add(award);
         }
     }

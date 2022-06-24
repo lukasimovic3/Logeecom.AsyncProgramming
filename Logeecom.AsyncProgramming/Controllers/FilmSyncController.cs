@@ -16,9 +16,17 @@ namespace Logeecom.AsyncProgramming.Presentation.Controllers
         }
 
         [HttpPost]
-        public void AddFilms(List<FilmViewModel> films)
+        public string AddFilms(List<FilmViewModel> films)
         {
+            System.Diagnostics.Stopwatch? watch = new();
+
+            watch.Start();
+
             this.filmService.CreateFilms(films);
+
+            watch.Stop();
+
+            return $"Execution Time: {watch.ElapsedMilliseconds} ms";
         }
 
         [HttpDelete]
