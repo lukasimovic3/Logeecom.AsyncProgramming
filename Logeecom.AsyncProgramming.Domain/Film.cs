@@ -6,16 +6,16 @@
         {
         }
 
-        public Film(Guid id, string name, int year, string country, Guid genreId, Guid directorId, Guid awardId)
+        public Film(Guid id, string name, int year, string country, Genre genre, Director director, Award award, List<Actor> actors)
         {
-            Id = id;
-            Name = name;
-            Year = year;
-            Country = country;
-            GenreId = genreId;
-            DirectorId = directorId;
-            AwardId = awardId;
-            Actors = new();
+            this.Id = id;
+            this.Name = name;
+            this.Year = year;
+            this.Country = country;
+            this.Genre = genre;
+            this.Director = director;
+            this.Award = award;
+            this.Actors = actors;
         }
 
         public Guid Id { get; private set; }
