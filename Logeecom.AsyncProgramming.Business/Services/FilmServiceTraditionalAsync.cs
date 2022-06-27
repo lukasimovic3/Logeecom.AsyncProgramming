@@ -7,18 +7,18 @@ namespace Logeecom.AsyncProgramming.Business.Services
 {
     public class FilmServiceTraditionalAsync
     {
-        private readonly IFilmRepositorySync filmRepository;
-        private readonly IActorRepositorySync actorRepository;
-        private readonly IAwardRepositorySync awardRepository;
-        private readonly IDirectorRepositorySync directorRepository;
-        private readonly IGenreRepositorySync genreRepository;
+        private readonly IFilmRepository filmRepository;
+        private readonly IActorRepository actorRepository;
+        private readonly IAwardRepository awardRepository;
+        private readonly IDirectorRepository directorRepository;
+        private readonly IGenreRepository genreRepository;
 
         public FilmServiceTraditionalAsync(
-            IFilmRepositorySync filmRepository,
-            IActorRepositorySync actorRepository,
-            IAwardRepositorySync awardRepository,
-            IDirectorRepositorySync directorRepository,
-            IGenreRepositorySync genreRepository)
+            IFilmRepository filmRepository,
+            IActorRepository actorRepository,
+            IAwardRepository awardRepository,
+            IDirectorRepository directorRepository,
+            IGenreRepository genreRepository)
         {
             this.filmRepository = filmRepository;
             this.actorRepository = actorRepository;

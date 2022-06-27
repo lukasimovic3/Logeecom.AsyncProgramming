@@ -3,25 +3,25 @@ using Logeecom.AsyncProgramming.Domain;
 
 namespace Logeecom.AsyncProgramming.DataAccess.Repositories
 {
-    public class GenreRepositorySync : IGenreRepositorySync
+    public class ActorRepository : IActorRepository
     {
         private readonly DbContextEF context;
 
-        public GenreRepositorySync(DbContextEF context)
+        public ActorRepository(DbContextEF context)
         {
             this.context = context;
         }
 
-        public Genre? GetGenreByName(string name)
+        public Actor? GetActorByName(string name)
         {
             Thread.Sleep(100);
-            return this.context.Genres.FirstOrDefault(g => g.Name == name);
+            return this.context.Actors.FirstOrDefault(a => a.Name == name);
         }
 
-        public void AddGenre(Genre genre)
+        public void AddActor(Actor actor)
         {
             Thread.Sleep(100);
-            this.context.Genres.Add(genre);
+            this.context.Actors.Add(actor);
         }
     }
 }

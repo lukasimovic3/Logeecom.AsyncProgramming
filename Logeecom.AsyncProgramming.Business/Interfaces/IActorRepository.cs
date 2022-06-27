@@ -2,7 +2,7 @@
 
 namespace Logeecom.AsyncProgramming.Business.Interfaces
 {
-    public interface IActorRepositorySync
+    public interface IActorRepository
     {
         public Actor? GetActorByName(string name);
 

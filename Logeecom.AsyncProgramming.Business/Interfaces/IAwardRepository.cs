@@ -2,7 +2,7 @@
 
 namespace Logeecom.AsyncProgramming.Business.Interfaces
 {
-    public interface IAwardRepositorySync
+    public interface IAwardRepository
     {
         public Award? GetAwardByName(string name);
 

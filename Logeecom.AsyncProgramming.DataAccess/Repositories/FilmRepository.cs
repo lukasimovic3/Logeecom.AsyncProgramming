@@ -3,11 +3,11 @@ using Logeecom.AsyncProgramming.Domain;
 
 namespace Logeecom.AsyncProgramming.DataAccess.Repositories
 {
-    public class FilmRepositorySync : IFilmRepositorySync
+    public class FilmRepository : IFilmRepository
     {
         private readonly DbContextEF context;
 
-        public FilmRepositorySync(DbContextEF context)
+        public FilmRepository(DbContextEF context)
         {
             this.context = context;
         }

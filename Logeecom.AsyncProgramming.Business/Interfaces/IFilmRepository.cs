@@ -2,7 +2,7 @@
 
 namespace Logeecom.AsyncProgramming.Business.Interfaces
 {
-    public interface IFilmRepositorySync
+    public interface IFilmRepository
     {
         public void AddFilm(Film film);
 

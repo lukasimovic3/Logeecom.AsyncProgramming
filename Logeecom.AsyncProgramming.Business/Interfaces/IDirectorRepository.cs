@@ -2,7 +2,7 @@
 
 namespace Logeecom.AsyncProgramming.Business.Interfaces
 {
-    public interface IDirectorRepositorySync
+    public interface IDirectorRepository
     {
         public Director? GetDirectorByName(string name);
 

@@ -3,25 +3,25 @@ using Logeecom.AsyncProgramming.Domain;
 
 namespace Logeecom.AsyncProgramming.DataAccess.Repositories
 {
-    public class ActorRepositorySync : IActorRepositorySync
+    public class DirectorRepository : IDirectorRepository
     {
         private readonly DbContextEF context;
 
-        public ActorRepositorySync(DbContextEF context)
+        public DirectorRepository(DbContextEF context)
         {
             this.context = context;
         }
 
-        public Actor? GetActorByName(string name)
+        public Director? GetDirectorByName(string name)
         {
             Thread.Sleep(100);
-            return this.context.Actors.FirstOrDefault(a => a.Name == name);
+            return this.context.Directors.FirstOrDefault(d => d.Name == name);
         }
 
-        public void AddActor(Actor actor)
+        public void AddDirector(Director director)
         {
             Thread.Sleep(100);
-            this.context.Actors.Add(actor);
+            this.context.Directors.Add(director);
         }
     }
 }

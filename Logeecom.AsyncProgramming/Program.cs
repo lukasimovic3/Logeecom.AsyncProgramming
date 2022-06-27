@@ -18,11 +18,11 @@ builder.Services.AddDbContext<DbContextEF>(
 );
 
 builder.Services.AddScoped<FilmServiceTraditionalAsync>();
-builder.Services.AddScoped<IAwardRepositorySync, AwardRepositorySync>();
-builder.Services.AddScoped<IGenreRepositorySync, GenreRepositorySync>();
-builder.Services.AddScoped<IActorRepositorySync, ActorRepositorySync>();
-builder.Services.AddScoped<IDirectorRepositorySync, DirectorRepositorySync>();
-builder.Services.AddScoped<IFilmRepositorySync, FilmRepositorySync>();
+builder.Services.AddScoped<IAwardRepository, AwardRepository>();
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
+builder.Services.AddScoped<IActorRepository, ActorRepository>();
+builder.Services.AddScoped<IDirectorRepository, DirectorRepository>();
+builder.Services.AddScoped<IFilmRepository, FilmRepository>();
 
 var app = builder.Build();
 

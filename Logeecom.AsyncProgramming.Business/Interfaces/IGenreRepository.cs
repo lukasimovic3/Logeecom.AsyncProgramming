@@ -2,7 +2,7 @@
 
 namespace Logeecom.AsyncProgramming.Business.Interfaces
 {
-    public interface IGenreRepositorySync
+    public interface IGenreRepository
     {
         public Genre? GetGenreByName(string name);
 

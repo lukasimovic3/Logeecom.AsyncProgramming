@@ -3,11 +3,11 @@ using Logeecom.AsyncProgramming.Domain;
 
 namespace Logeecom.AsyncProgramming.DataAccess.Repositories
 {
-    public class AwardRepositorySync : IAwardRepositorySync
+    public class AwardRepository : IAwardRepository
     {
         private readonly DbContextEF context;
 
-        public AwardRepositorySync(DbContextEF context)
+        public AwardRepository(DbContextEF context)
         {
             this.context = context;
         }
