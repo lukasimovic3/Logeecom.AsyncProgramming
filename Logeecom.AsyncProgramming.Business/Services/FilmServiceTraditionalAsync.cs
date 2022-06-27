@@ -37,10 +37,9 @@ namespace Logeecom.AsyncProgramming.Business.Services
             try
             {
                 Mutex mutex = new();
-
                 foreach (FilmViewModel film in films)
                 {
-                    if (this.filmRepository.GetFilmByName(film.Name) != null)
+                    if (CheckFilmWithSameNameExists(film))
                     {
                         continue;
                     }
@@ -61,14 +60,9 @@ namespace Logeecom.AsyncProgramming.Business.Services
                     Thread actorsThread = new(() => this.CheckActors(film, out actors, mutex));
                     actorsThread.Start();
 
-                    genreThread.Join();
-                    awardThread.Join();
-                    directorThread.Join();
-                    actorsThread.Join();
+                    JoinAllThreads(genreThread, awardThread, directorThread, actorsThread);
 
-                    Film newFilm = new(Guid.NewGuid(), film.Name, film.Year, film.Country, genre.Id, director.Id, award.Id);
-                    newFilm.SetActors(actors);
-
+                    Film newFilm = new(Guid.NewGuid(), film.Name, film.Year, film.Country, genre, director, award, actors);
                     this.filmRepository.AddFilm(newFilm);
                 }
                 this.filmRepository.SaveChanges();
@@ -77,6 +71,19 @@ namespace Logeecom.AsyncProgramming.Business.Services
             {
                 Debug.WriteLine(e.Message);
             }
+        }
+
+        private bool CheckFilmWithSameNameExists(FilmViewModel film)
+        {
+            return this.filmRepository.GetFilmByName(film.Name) != null;
+        }
+
+        private static void JoinAllThreads(Thread genreThread, Thread awardThread, Thread directorThread, Thread actorsThread)
+        {
+            genreThread.Join();
+            awardThread.Join();
+            directorThread.Join();
+            actorsThread.Join();
         }
 
         private void CheckActors(FilmViewModel film, out List<Actor> actors, Mutex mutex)
