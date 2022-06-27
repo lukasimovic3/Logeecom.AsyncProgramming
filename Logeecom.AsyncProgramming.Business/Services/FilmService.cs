@@ -32,60 +32,85 @@ namespace Logeecom.AsyncProgramming.Business.Services
         {
             foreach (FilmDto film in request)
             {
-                if ((await this.filmRepository.GetByFilmNameAsync(film.Name)) != null)
+                if (await CheckFilmWithSameNameExistsAsync(film) != null)
                 {
                     continue;
                 }
 
-                List<Actor> actors = new();
-                Award award = await this.awardRepository.GetByAwardNameAsync(film.Award);
-                Director director = await this.directorRepository.GetByDirectorNameAsync(film.Director);
-                Genre genre = await this.genreRepository.GetByGenreNameAsync(film.Genre);
+                Award award = await ResolveAward(film);
+                Director director = await ResolveDirector(film);
+                Genre genre = await ResolveGenre(film);
+                List<Actor> actors = await ResolveActors(film);
 
-                foreach (ActorDto actorDto in film.Actors)
-                {
-                    Actor actor = await this.actorRepository.GetByActorName(actorDto.Name);
-                    if (actor is null)
-                    {
-                        actor = new(Guid.NewGuid(), actorDto.Name);
-                        await this.actorRepository.CreateAsync(actor);
-                    }
-                    else
-                    {
-                        actor.IncrementFilms();
-                    }
-                    actors.Add(actor);
-                }
+                await this.filmRepository.CreateAsync(new Film(Guid.NewGuid(), film.Name, film.Year, film.Country, genre, director, award, actors));
+            }
+            await this.filmRepository.SaveChanges();
+        }
 
-                if (award is null)
-                {
-                    award = new(Guid.NewGuid(), film.Award);
-                    await this.awardRepository.CreateAsync(award);
-                }
+        private Task<Film?> CheckFilmWithSameNameExistsAsync(FilmDto film)
+        {
+            return this.filmRepository.GetByFilmNameAsync(film.Name);
+        }
 
-                if (director is null)
+        private async Task<Genre> ResolveGenre(FilmDto film)
+        {
+            Genre genre = await this.genreRepository.GetByGenreNameAsync(film.Genre);
+            if (genre is null)
+            {
+                genre = new(Guid.NewGuid(), film.Genre);
+                await this.genreRepository.CreateAsync(genre);
+            }
+
+            return genre;
+        }
+
+        private async Task<Director> ResolveDirector(FilmDto film)
+        {
+            Director director = await this.directorRepository.GetByDirectorNameAsync(film.Director);
+            if (director is null)
+            {
+                director = new(Guid.NewGuid(), film.Director);
+                await this.directorRepository.CreateAsync(director);
+            }
+            else
+            {
+                director.IncrementFilms();
+            }
+
+            return director;
+        }
+
+        private async Task<Award> ResolveAward(FilmDto film)
+        {
+            Award award = await this.awardRepository.GetByAwardNameAsync(film.Award);
+            if (award is null)
+            {
+                award = new(Guid.NewGuid(), film.Award);
+                await this.awardRepository.CreateAsync(award);
+            }
+
+            return award;
+        }
+
+        private async Task<List<Actor>> ResolveActors(FilmDto film)
+        {
+            List<Actor> actors = new();
+            foreach (ActorDto actorDto in film.Actors)
+            {
+                Actor actor = await this.actorRepository.GetByActorName(actorDto.Name);
+                if (actor is null)
                 {
-                    director = new(Guid.NewGuid(), film.Director);
-                    await this.directorRepository.CreateAsync(director);
+                    actor = new(Guid.NewGuid(), actorDto.Name);
+                    await this.actorRepository.CreateAsync(actor);
                 }
                 else
                 {
-                    director.IncrementFilms();
+                    actor.IncrementFilms();
                 }
-
-                if (genre is null)
-                {
-                    genre = new(Guid.NewGuid(), film.Genre);
-                    await this.genreRepository.CreateAsync(genre);
-                }
-
-                Film newFilm = new(Guid.NewGuid(), film.Name, film.Year, film.Country, genre.Id, director.Id, award.Id);
-                newFilm.AddActors(actors);
-
-                await this.filmRepository.CreateAsync(newFilm);
-
-                await this.filmRepository.SaveChanges();
+                actors.Add(actor);
             }
+
+            return actors;
         }
 
         public async Task DeleteAll()

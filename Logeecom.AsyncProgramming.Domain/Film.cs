@@ -2,15 +2,16 @@
 {
     public class Film
     {
-        public Film(Guid id, string name, int year, string country, Guid genreId, Guid directorId, Guid awardId)
+        public Film(Guid id, string name, int year, string country, Genre genre, Director director, Award award, List<Actor> actors)
         {
             this.Id = id;
             this.Name = name;
             this.Year = year;
             this.Country = country;
-            this.GenreId = genreId;
-            this.DirectorId = directorId;
-            this.AwardId = awardId;
+            this.Genre = genre;
+            this.Director = director;
+            this.Award = award;
+            this.Actors = actors;
         }
 
         public Film(Guid id, string name, int year, string country)
@@ -46,10 +47,5 @@
         public Guid GenreId { get; private set; }
 
         public Genre Genre { get; private set; }
-
-        public void AddActors(List<Actor> actors)
-        {
-            this.Actors = actors;
-        }
     }
 }
