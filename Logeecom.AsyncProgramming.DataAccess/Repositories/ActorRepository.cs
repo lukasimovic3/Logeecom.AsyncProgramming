@@ -1,9 +1,10 @@
-﻿using Logeecom.AsyncProgramming.Domain;
+﻿using Logeecom.AsyncProgramming.Business.Interfaces;
+using Logeecom.AsyncProgramming.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logeecom.AsyncProgramming.DataAccess.Repositories
 {
-    public class ActorRepository
+    public class ActorRepository : IActorRepository
     {
         private readonly DbContextEF context;
 
@@ -22,11 +23,6 @@ namespace Logeecom.AsyncProgramming.DataAccess.Repositories
         {
             Thread.Sleep(100);
             return this.context.Actors.FirstOrDefaultAsync(x => x.Name == name);
-        }
-
-        public Task SaveChanges()
-        {
-            return this.context.SaveChangesAsync();
         }
 
         public void DeleteAllAsync()

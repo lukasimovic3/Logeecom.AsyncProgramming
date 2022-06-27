@@ -7,13 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Interfaces\**" />
-    <EmbeddedResource Remove="Interfaces\**" />
-    <None Remove="Interfaces\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Logeecom.AsyncProgramming.DataAccess\Logeecom.AsyncProgramming.DataAccess.csproj" />
+    <ProjectReference Include="..\Logeecom.AsyncProgramming.Domain\Logeecom.AsyncProgramming.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Logeecom.AsyncProgramming.Business\Logeecom.AsyncProgramming.Business.csproj" />
+    <ProjectReference Include="..\Logeecom.AsyncProgramming.DataAccess\Logeecom.AsyncProgramming.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

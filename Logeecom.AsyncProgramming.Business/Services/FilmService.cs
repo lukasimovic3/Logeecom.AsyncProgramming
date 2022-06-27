@@ -1,5 +1,5 @@
 ﻿using Logeecom.AsyncProgramming.Business.Dtos;
-using Logeecom.AsyncProgramming.DataAccess.Repositories;
+using Logeecom.AsyncProgramming.Business.Interfaces;
 using Logeecom.AsyncProgramming.Domain;
 
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
@@ -8,18 +8,18 @@ namespace Logeecom.AsyncProgramming.Business.Services
 {
     public class FilmService
     {
-        private readonly ActorRepository actorRepository;
-        private readonly AwardRepository awardRepository;
-        private readonly DirectorRepository directorRepository;
-        private readonly FilmRepository filmRepository;
-        private readonly GenreRepository genreRepository;
+        private readonly IActorRepository actorRepository;
+        private readonly IAwardRepository awardRepository;
+        private readonly IDirectorRepository directorRepository;
+        private readonly IFilmRepository filmRepository;
+        private readonly IGenreRepository genreRepository;
 
         public FilmService(
-            ActorRepository actorRepository,
-            AwardRepository awardRepository,
-            DirectorRepository directorRepository,
-            FilmRepository filmRepository,
-            GenreRepository genreRepository)
+            IActorRepository actorRepository,
+            IAwardRepository awardRepository,
+            IDirectorRepository directorRepository,
+            IFilmRepository filmRepository,
+            IGenreRepository genreRepository)
         {
             this.actorRepository = actorRepository;
             this.awardRepository = awardRepository;
@@ -91,7 +91,7 @@ namespace Logeecom.AsyncProgramming.Business.Services
         public async Task DeleteAll()
         {
             this.actorRepository.DeleteAllAsync();
-            await this.actorRepository.SaveChanges();
+            await this.filmRepository.SaveChanges();
         }
     }
 

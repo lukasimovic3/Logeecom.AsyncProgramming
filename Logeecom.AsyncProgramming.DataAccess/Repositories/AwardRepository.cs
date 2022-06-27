@@ -1,9 +1,10 @@
-﻿using Logeecom.AsyncProgramming.Domain;
+﻿using Logeecom.AsyncProgramming.Business.Interfaces;
+using Logeecom.AsyncProgramming.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logeecom.AsyncProgramming.DataAccess.Repositories
 {
-    public class AwardRepository
+    public class AwardRepository : IAwardRepository
     {
         private readonly DbContextEF context;
 
@@ -16,11 +17,6 @@ namespace Logeecom.AsyncProgramming.DataAccess.Repositories
         {
             Thread.Sleep(100);
             return this.context.Awards.AddAsync(award).AsTask();
-        }
-
-        public Task SaveChanges()
-        {
-            return this.context.SaveChangesAsync();
         }
 
         public Task<Award?> GetByAwardNameAsync(string name)

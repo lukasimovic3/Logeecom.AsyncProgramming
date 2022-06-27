@@ -1,9 +1,10 @@
-﻿using Logeecom.AsyncProgramming.Domain;
+﻿using Logeecom.AsyncProgramming.Business.Interfaces;
+using Logeecom.AsyncProgramming.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logeecom.AsyncProgramming.DataAccess.Repositories
 {
-    public class FilmRepository
+    public class FilmRepository : IFilmRepository
     {
         private readonly DbContextEF context;
 
@@ -18,15 +19,15 @@ namespace Logeecom.AsyncProgramming.DataAccess.Repositories
             return this.context.Films.AddAsync(film).AsTask();
         }
 
-        public Task SaveChanges()
-        {
-            return this.context.SaveChangesAsync();
-        }
-
         public Task<Film?> GetByFilmNameAsync(string name)
         {
             Thread.Sleep(100);
             return this.context.Films.FirstOrDefaultAsync(x => x.Name == name);
+        }
+
+        public Task SaveChanges()
+        {
+            return this.context.SaveChangesAsync();
         }
     }
 }
