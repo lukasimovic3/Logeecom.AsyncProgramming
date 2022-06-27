@@ -1,6 +1,5 @@
 ﻿using Logeecom.AsyncProgramming.Business.Dtos;
 using Logeecom.AsyncProgramming.Business.Services;
-using Logeecom.AsyncProgramming.Presentation.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Logeecom.AsyncProgramming.Controllers
@@ -10,23 +9,23 @@ namespace Logeecom.AsyncProgramming.Controllers
     public class FilmController : ControllerBase
     {
         [HttpPost("load")]
-        public async Task<Response> LoadFilms(List<FilmDto> films, [FromServices] FilmService service)
+        public async Task<string> LoadFilms(List<FilmDto> films, [FromServices] FilmService service)
         {
+            System.Diagnostics.Stopwatch? watch = new();
+
+            watch.Start();
+
             await service.LoadFilms(films);
 
-            return new()
-            {
-            };
+            watch.Stop();
+
+            return $"Execution Time: {watch.ElapsedMilliseconds} ms";
         }
 
-        [HttpGet("delete")]
-        public async Task<Response> DeleteFilms([FromServices] FilmService service)
+        [HttpDelete("delete")]
+        public async Task DeleteFilms([FromServices] FilmService service)
         {
             await service.DeleteAll();
-
-            return new()
-            {
-            };
         }
     }
 }

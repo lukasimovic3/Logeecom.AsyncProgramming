@@ -1,6 +1,5 @@
 ﻿using Logeecom.AsyncProgramming.Domain;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Logeecom.AsyncProgramming.DataAccess.Repositories
 {
@@ -15,26 +14,19 @@ namespace Logeecom.AsyncProgramming.DataAccess.Repositories
 
         public Task CreateAsync(Actor actor)
         {
-            Thread.Sleep(10);
+            Thread.Sleep(100);
             return this.context.Actors.AddAsync(actor).AsTask();
         }
 
         public Task<Actor?> GetByActorName(string name)
         {
-            Thread.Sleep(10);
+            Thread.Sleep(100);
             return this.context.Actors.FirstOrDefaultAsync(x => x.Name == name);
         }
 
         public Task SaveChanges()
         {
-            Thread.Sleep(10);
             return this.context.SaveChangesAsync();
-        }
-
-        public Task<IDbContextTransaction> GetTransaction()
-        {
-            Thread.Sleep(10);
-            return this.context.Database.BeginTransactionAsync();
         }
 
         public void DeleteAllAsync()

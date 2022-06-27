@@ -14,17 +14,18 @@ namespace Logeecom.AsyncProgramming.DataAccess.Repositories
 
         public Task CreateAsync(Genre genre)
         {
+            Thread.Sleep(100);
             return this.context.Genres.AddAsync(genre).AsTask();
         }
 
         public Task SaveChanges()
         {
-            Thread.Sleep(10);
             return this.context.SaveChangesAsync();
         }
 
         public Task<Genre?> GetByGenreNameAsync(string name)
         {
+            Thread.Sleep(100);
             return this.context.Genres.FirstOrDefaultAsync(x => x.Name == name);
         }
     }

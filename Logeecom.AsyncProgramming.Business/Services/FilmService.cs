@@ -32,6 +32,11 @@ namespace Logeecom.AsyncProgramming.Business.Services
         {
             foreach (FilmDto film in request)
             {
+                if ((await this.filmRepository.GetByFilmNameAsync(film.Name)) != null)
+                {
+                    continue;
+                }
+
                 List<Actor> actors = new();
                 Award award = await this.awardRepository.GetByAwardNameAsync(film.Award);
                 Director director = await this.directorRepository.GetByDirectorNameAsync(film.Director);
