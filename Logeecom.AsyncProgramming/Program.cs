@@ -17,7 +17,7 @@ builder.Services.AddDbContext<DbContextEF>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("MoviesDb"))
 );
 
-builder.Services.AddScoped<FilmServiceSync>();
+builder.Services.AddScoped<FilmServiceTraditionalAsync>();
 builder.Services.AddScoped<IAwardRepositorySync, AwardRepositorySync>();
 builder.Services.AddScoped<IGenreRepositorySync, GenreRepositorySync>();
 builder.Services.AddScoped<IActorRepositorySync, ActorRepositorySync>();

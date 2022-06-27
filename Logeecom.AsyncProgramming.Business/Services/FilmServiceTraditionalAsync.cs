@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Logeecom.AsyncProgramming.Business.Services
 {
-    public class FilmServiceSync
+    public class FilmServiceTraditionalAsync
     {
         private readonly IFilmRepositorySync filmRepository;
         private readonly IActorRepositorySync actorRepository;
@@ -13,7 +13,7 @@ namespace Logeecom.AsyncProgramming.Business.Services
         private readonly IDirectorRepositorySync directorRepository;
         private readonly IGenreRepositorySync genreRepository;
 
-        public FilmServiceSync(
+        public FilmServiceTraditionalAsync(
             IFilmRepositorySync filmRepository,
             IActorRepositorySync actorRepository,
             IAwardRepositorySync awardRepository,
