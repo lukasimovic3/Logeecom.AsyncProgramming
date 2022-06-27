@@ -16,7 +16,6 @@ namespace Logeecom.AsyncProgramming.DataAccess.Repositories
         {
             Thread.Sleep(100);
             this.context.Films.Add(film);
-            this.context.SaveChanges();
         }
 
         public void DeleteAll()
